@@ -65,3 +65,50 @@ const player = (playerName, playerMarker, boardAPI) => {
     return { setName, setMarker, getName, checkWinner, isWinner };
 };
 
+const computerPlayer = (name, marker, boardAPI) => {
+    const base = player(name, marker, boardAPI);
+
+    // Coordinate factory
+    const coordinate = (row, col) => {
+        const getRow = () => row;
+        const getCol = () => col;
+        const isMarked = () => boardAPI.getCellValue(row, col) !== '';
+        return { getRow, getCol, isMarked };
+    };
+
+    // Generate all coordinates once
+    let coordinateList = [];
+    for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+            coordinateList.push(coordinate(row, col));
+        }
+    }
+
+    const makeMove = () => {
+        let chosen = false;
+        let chosenCoordinate = null;
+
+        const getRand = () => Math.floor(Math.random() * coordinateList.length);
+
+        while (!chosen && coordinateList.length > 0) {
+            const guess = getRand();
+            const coord = coordinateList[guess];
+
+            if (coord.isMarked()) {
+                coordinateList.splice(guess, 1); // remove tried cell
+            } else {
+                chosenCoordinate = coordinateList.splice(guess, 1)[0]; // remove and use it
+                const row = chosenCoordinate.getRow();
+                const col = chosenCoordinate.getCol();
+                boardAPI.setCell(row, col, marker);
+                chosen = true;
+                return { row, col };
+            }
+        }
+
+        return null; // no valid moves
+    };
+
+    return { ...base, makeMove };
+};
+
