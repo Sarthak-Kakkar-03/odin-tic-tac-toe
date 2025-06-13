@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 2rem;
+
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 150px;
+  width: 100%;           
+  max-width: 600px;
+  gap: 5px;
+}
+
+.cell {
+    height: 100%;
+    width: 100%;
+    border-style: dashed;
+}
+
+.options-bar {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+}
+
+.options-bar #message {
+    font-size: 36px;
+}
+
+.options-bar button {
+    max-width: 12rem;
+}
+
+.input-holders {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
